@@ -12,7 +12,5 @@ router.use('/users', require('./users'));
 //Handles all the /.... paths
 router.get('/', homeController.home);
 
-router.get('/contacts', homeController.contacts);
-
 module.exports = router;
 

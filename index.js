@@ -1,9 +1,18 @@
 
 const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
-const db = require('./config/mongoose');
+const cookieParser = require('cookie-parser');
+require('./config/mongoose');
+const User = require('./models/userSchema');
 const app = express();
 const port = 8000;
+
+
+//Use the urlencoded parser
+app.use(express.urlencoded());
+
+//Tell the app to use cookie parser
+app.use(cookieParser());
 
 
 //Use the static files(middleware)

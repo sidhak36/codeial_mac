@@ -1,4 +1,48 @@
 
 body{
-    background-color: aqua;
+    font-size: 13px;
+    font-family: verdana;
+}
+
+#signup-intro{
+    text-align: center;
+    color: blue;
+    font-size: 2rem;
+}
+
+#signup-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#signup-form input{
+    display: block;
+    margin: 20px 0;
+    font-size: 1.3rem;
+    width: 300px;
+    border: 1px solid black;
+    background-color: azure;
+    padding: 5px 0;
+}
+
+#signup-form #signup-submit{
+    width: auto;
+    padding: 10px 30px;
+    background-color: skyblue;
+}
+
+#login-button{
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+#login-button a{
+    background-color: skyblue;
+    padding: 10px 30px;
+    text-decoration: none;
+    font-size: 1.3rem;
+    border: 1px solid black;
+    color: black;
 }

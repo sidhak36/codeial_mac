@@ -16,4 +16,11 @@ router.get('/profile', usersController.profilePage);
 
 router.get('/info', usersController.info);
 
+router.get('/sign-up', usersController.signUp);
+
+router.get('/sign-in', usersController.signIn);
+
+
+router.post('/create', usersController.create);
+
 module.exports = router;
