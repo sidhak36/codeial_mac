@@ -4,7 +4,7 @@ const Users = require('../models/userSchema');
 
 module.exports.profilePage = function(req, res){
     return res.render('user_profile', {
-        title : "User's Profile"
+        title : "User's Profile",
     });
 }
 
@@ -59,5 +59,12 @@ module.exports.create = function(req, res){
 
 //sign in and create a session for the user
 module.exports.createSession = function(req, res){
-    //TODO Later
+    return res.redirect('/users/profile');
+}
+
+
+//sign out
+module.exports.destroySession = function(req, res){
+    req.logout();
+    return res.redirect('/users/sign-in');
 }

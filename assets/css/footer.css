@@ -1,0 +1,25 @@
+footer {
+  font-size: 1rem;
+  font-family: verdana;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 70px;
+  padding-top: 10px;
+  background-color: #616161;
+  display: flex;
+  justify-content: flex-start; }
+  footer .company-info {
+    color: white;
+    margin: 10px; }
+    footer .company-info .logo {
+      border: 1px solid white;
+      padding: 0 4px;
+      border-radius: 50%; }
+  footer .page-links {
+    margin: 10px;
+    display: flex;
+    flex-direction: column; }
+    footer .page-links a {
+      color: white;
+      text-decoration: none; }

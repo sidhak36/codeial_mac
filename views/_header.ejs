@@ -1,4 +1,15 @@
 
 <header>
-    This is the header
+    <p>CODEIAL</p>
+    <% if(locals.user){ %>
+        <div class = "header-info">
+            <%= locals.user.name %>
+            <a href="/users/sign-out">Sign Out</a>
+        </div>
+    <% }else{ %>
+        <div class = "header-info">
+            <a href="/users/sign-up">Sign Up</a>
+            <a href="/users/sign-in">Sign In</a>
+        </div>
+    <% } %>
 </header>

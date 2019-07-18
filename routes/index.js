@@ -5,6 +5,7 @@ const router = express.Router();
 
 const homeController = require('../controllers/home_controller');
 
+
 // Middleware - Handles the path /users/....
 router.use('/users', require('./users'));
 
