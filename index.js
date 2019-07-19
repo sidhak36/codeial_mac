@@ -63,8 +63,8 @@ app.use(passport.session());
 app.use(passport.setAuthenticatedUser);
 
 
-//Use express router (middleware)
-app.use('/', require('./routes/index'));
+//Use express router (middleware) Any request path will be sent to routes directory to map a controller
+app.use(require('./routes/index'));
 
 
 //setting up the view engine

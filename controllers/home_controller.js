@@ -1,18 +1,20 @@
 
+const Post = require('../models/posts');
 
 module.exports.home = function(req, res){
-    console.log(req.cookies);
-    res.cookie('user_id', 25);
-    return res.render('home', {
-        title : "Home Page"
+    Post.find({}).populate('user').exec(function(err, posts){
+        if(err){
+            console.log('Error occured while displaying all posts');
+            return;
+        }
+        return res.render('home', {
+            title : "Home Page",
+            posts: posts
+        });
     });
+    
 }
 
-module.exports.signup = function(req, res){
-    console.log(req.body);
-    return res.redirect('back');
-}
 
-module.exports.login = function(req, res){
-    return res.redirect('back');
-}
+
+

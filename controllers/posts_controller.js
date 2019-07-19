@@ -1,5 +1,15 @@
 
+const Post = require('../models/posts');
 
-module.exports.post = function(req, res){
-    return res.end('<h1> Post Here...</h1>');
+module.exports.createPost = function(req, res){
+    Post.create({
+        content: req.body.content,
+        user: req.user._id
+    }, function(err, post){
+        if(err){
+            console.log('An error occured while saving user post in database');
+            return;
+        }
+        return res.redirect('/');
+    });
 }
