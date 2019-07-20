@@ -13,9 +13,7 @@ header{
     border-bottom: 1px solid white;
 
     p{
-        color: $textColor;
         margin: 0 20px;
-        font-family: verdana;
         width: 10%;
         text-align: center;
     }
@@ -24,11 +22,16 @@ header{
         display: flex;
         justify-content: space-around;
         width: 25%;
+    }
 
-        a{
-            text-decoration: none;
-            color: $textColor;
-            font-family: verdana;
-        }
+    a{
+        text-decoration: none;
+        color: $textColor;
+        font-family: verdana;
+    }
+    a:hover{
+        text-decoration: none;
+        color: wheat;
+        font-family: verdana;
     }
 }

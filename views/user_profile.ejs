@@ -1,4 +1,43 @@
 
 <link rel="stylesheet" href="/css/user_profile.css">
-<h1>Access the User's profile here.. | <%= title %></h1>
-<h1><%= user.name + " | " + user.email %></h1>
+
+
+<% if(user.id == profile_user.id){ %> 
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Welcome</h4>
+        </div>
+        <div class="card-body">
+            <p> <%= profile_user.name %></p>
+            <p> <%= profile_user.email %></p>
+        </div>
+    </div>
+    <!--If user matches, then show the form-->
+    <div class="card">
+        <div class="card-header">
+            Update Profile Information
+        </div>
+        <div class="card-body">
+            <form action="/users/update/<%= profile_user.id %>" method="post">
+                <div class="form-group">
+                    <input class = "form-control" type="text" name="name" value="<%= profile_user.name %>" required placeholder="Enter Name">
+                </div>
+                <div class="form-group">
+                    <input class = "form-control" type="email" name="email" value="<%= profile_user.email%>" required placeholder="Enter Email">
+                </div>
+                <input class="btn btn-primary" type="submit" value="Update">
+            </form>
+        </div>
+    </div>
+<% }else{ %>
+    <!--show only the profile info-->
+    <div class="card">
+        <div class="card-header">
+            <h4 class="card-title">Welcome</h4>
+        </div>
+        <div class="card-body">
+            <p> <%= profile_user.name %></p>
+            <p> <%= profile_user.email %></p>
+        </div>
+    </div>
+<% } %>

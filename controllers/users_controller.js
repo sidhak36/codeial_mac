@@ -1,11 +1,38 @@
 
 //Instance of Users model in the database
-const Users = require('../models/userSchema');
+const User = require('../models/userSchema');
 
 module.exports.profilePage = function(req, res){
-    return res.render('user_profile', {
-        title : "User's Profile",
+    User.findById(req.params.id, function(err, user){
+        if(err){
+            console.log('Error while finding user');
+            return;
+        }
+
+        if(user){
+            return res.render('user_profile', {
+                title: 'User profile',
+                profile_user: user
+            });
+        }else{
+            return res.redirect('back');
+        }
     });
+}
+
+module.exports.update = function(req, res){
+    if(req.user.id == req.params.id){
+        //Update the user information
+        User.findByIdAndUpdate(req.params.id, req.body, function(err, user){
+            if(err){
+                console.log("An error occured while updating user's info");
+                return;
+            }
+            return res.redirect('back');
+        });
+    }else{
+        return res.status(401).send('Unauthorized Request');
+    }
 }
 
 module.exports.info = function(req, res){
@@ -36,7 +63,7 @@ module.exports.create = function(req, res){
         return res.redirect('back');
     }
 
-    Users.findOne({email: req.body.email}, function(err, user){
+    User.findOne({email: req.body.email}, function(err, user){
         if(err){
             console.log('An error occured while finding user with specified email');
             return;
@@ -45,7 +72,7 @@ module.exports.create = function(req, res){
         if(user){
             return res.redirect('back');
         }
-        Users.create(req.body, function(err, user){
+        User.create(req.body, function(err, user){
             if(err){
                 console.log('An error occured while creating the user');
                 return;

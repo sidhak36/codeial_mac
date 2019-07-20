@@ -1,9 +1,9 @@
 
 <header>
-    <p>CODEIAL</p>
+    <p><a href = "/">CODEIAL</a></p>
     <% if(locals.user){ %>
         <div class = "header-info">
-            <a href="/users/profile">Welcome <%= locals.user.name %></a>
+            <a href="/users/profile/<%= locals.user.id %>">Welcome <%= locals.user.name %></a>
             <a href="/users/sign-out">Sign Out</a>
         </div>
     <% }else{ %>

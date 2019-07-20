@@ -1,0 +1,31 @@
+<div class = "post-item card">
+    <div class = "card-body">
+        <h4 class = "card-title">Post</h4>
+        <p class = "card-text"><%= post.content %></p>
+        <% if(locals.user && locals.user.id == post.user.id){ %>
+        <a class="delete" href="/posts/destroy/<%= post.id %>">X</a>
+        <% } %>
+        <% if(locals.user){ %>
+        <div class = "comment-item card">
+            <div class="card-body">
+                <h5 class="card-title">Comments</h5>
+                <form action="/comments/create-comment" class = "new-comment-form" method="POST">
+                    <div class = form-group>
+                        <input class="form-control" required name="content" placeholder="Type Here...">
+                    </div>
+                    <input type="hidden" name="post_id" value="<%= post._id %>">
+                    <input class="btn btn-primary" type="submit" value = "Add Comment">
+                </form>
+            </div>
+        </div>
+        <% } %>
+        <div id = "post-comments-list">
+            <% for(var comment of post.comments){ %>
+                <%- include('_comment', {comment: comment}) -%>
+            <% } %>
+        </div>
+    </div>
+    <div class="card-footer">
+        <p class="owner-name card-link text-primary">Posted by <%= post.user.name %></p>
+    </div>
+</div>

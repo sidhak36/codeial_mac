@@ -8,7 +8,8 @@ body {
   #container #left-todo {
     width: 25%; }
   #container #posts {
-    width: 40%; }
+    width: 40%;
+    padding: 10px; }
     #container #posts #posts-list .post-item {
       margin: 20px 0;
       position: relative; }
@@ -19,8 +20,23 @@ body {
         border: 2px solid blue;
         margin: 10px 0;
         position: relative; }
-  #container #right-todo {
-    width: 25%; }
+  #container #user-friends {
+    width: 25%;
+    padding: 10px;
+    border-left: 1px solid lightgrey; }
+    #container #user-friends h4 {
+      text-align: center;
+      color: white;
+      margin-bottom: 20px; }
+    #container #user-friends .friend-item {
+      margin: 2px;
+      padding: 5px;
+      border-radius: 2px;
+      background-color: #1A237E;
+      color: white; }
+      #container #user-friends .friend-item a {
+        color: white;
+        font-size: 1.2rem; }
 
 .delete {
   text-decoration: none;

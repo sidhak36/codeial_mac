@@ -21,52 +21,21 @@
         <div id = "posts-list">
             <div>
                 <% for(var post of posts){ %>
-                    <div class = "post-item card">
-                        <div class = "card-body">
-                            <h4 class = "card-title">Post</h4>
-                            <p class = "card-text"><%= post.content %></p>
-                            <% if(locals.user && locals.user.id == post.user.id){ %>
-                            <a class="delete" href="/posts/destroy/<%= post.id %>">X</a>
-                            <% } %>
-                            <% if(locals.user){ %>
-                            <div class = "comment-item card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Comments</h5>
-                                    <form action="/comments/create-comment" class = "new-comment-form" method="POST">
-                                        <div class = form-group>
-                                            <input class="form-control" required name="content" placeholder="Type Here...">
-                                        </div>
-                                        <input type="hidden" name="post_id" value="<%= post._id %>">
-                                        <input class="btn btn-primary" type="submit" value = "Add Comment">
-                                    </form>
-                                </div>
-                            </div>
-                            <% } %>
-                            <div id = "post-comments-list">
-                                <% for(var comment of post.comments){ %>
-                                    <div id = "post-comments-<%= post._id %>" class="comment-item card">
-                                        <div class="card-body">
-                                            <h5 class="card-title">Comment</h5>
-                                            <p class="card-text"><%= comment.content %></p>
-                                            <% if(locals.user && (locals.user.id == comment.user.id || locals.user.id == post.user.id)){ %>
-                                            <a class="delete" href="/comments/destroy/<%= comment.id %>">X</a>
-                                            <% } %>
-                                        </div>
-                                        <div class="card-footer">
-                                            <p class = "owner-name card-link text-primary">Commented by <%= comment.user.name %></p>
-                                        </div>
-                                    </div>
-                                <% } %>
-                            </div>
-                        </div>
-                        <div class="card-footer">
-                            <p class="owner-name card-link text-primary">Posted by <%= post.user.name %></p>
-                        </div>
-                    </div>
+                    <%- include('_post', {post: post}); %>
                 <% } %>
                 </div>
         </div>
     </section>
     
-    <section id = "right-todo"></section>
+    
+    <section id = "user-friends">
+            <h4>FRIENDS</h4>
+        <% if(locals.user){ %>
+        <% for(var user of all_users){ %>
+            <div class = "friend-item">
+                <a href="/users/profile/<%= user.id %>" class="card-link"><%= user.name%></a>
+            </div>
+        <% } %>
+        <% } %>
+    </section>
 </div>

@@ -8,16 +8,18 @@ header {
   justify-content: space-between;
   border-bottom: 1px solid white; }
   header p {
-    color: white;
     margin: 0 20px;
-    font-family: verdana;
     width: 10%;
     text-align: center; }
   header .header-info {
     display: flex;
     justify-content: space-around;
     width: 25%; }
-    header .header-info a {
-      text-decoration: none;
-      color: white;
-      font-family: verdana; }
+  header a {
+    text-decoration: none;
+    color: white;
+    font-family: verdana; }
+  header a:hover {
+    text-decoration: none;
+    color: wheat;
+    font-family: verdana; }

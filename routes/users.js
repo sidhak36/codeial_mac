@@ -14,7 +14,8 @@ router.use('/posts', require('./posts'));
 
 
 //Handles all the /users/.... paths
-router.get('/profile', passport.checkAuthentication, usersController.profilePage);
+router.get('/profile/:id', passport.checkAuthentication, usersController.profilePage);
+router.post('/update/:id', passport.checkAuthentication, usersController.update);
 
 router.get('/info', usersController.info);
 

@@ -1,0 +1,12 @@
+<div id = "post-comments-<%= post._id %>" class="comment-item card">
+    <div class="card-body">
+        <h5 class="card-title">Comment</h5>
+        <p class="card-text"><%= comment.content %></p>
+        <% if(locals.user && (locals.user.id == comment.user.id || locals.user.id == post.user.id)){ %>
+        <a class="delete" href="/comments/destroy/<%= comment.id %>">X</a>
+        <% } %>
+    </div>
+    <div class="card-footer">
+        <p class = "owner-name card-link text-primary">Commented by <%= comment.user.name %></p>
+    </div>
+</div>
