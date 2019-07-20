@@ -25,7 +25,9 @@
                         <div class = "card-body">
                             <h4 class = "card-title">Post</h4>
                             <p class = "card-text"><%= post.content %></p>
-                            <a class="delete-post" href="/posts/destroy/<%= post.id %>">X</a>
+                            <% if(locals.user && locals.user.id == post.user.id){ %>
+                            <a class="delete" href="/posts/destroy/<%= post.id %>">X</a>
+                            <% } %>
                             <% if(locals.user){ %>
                             <div class = "comment-item card">
                                 <div class="card-body">
@@ -46,6 +48,9 @@
                                         <div class="card-body">
                                             <h5 class="card-title">Comment</h5>
                                             <p class="card-text"><%= comment.content %></p>
+                                            <% if(locals.user && (locals.user.id == comment.user.id || locals.user.id == post.user.id)){ %>
+                                            <a class="delete" href="/comments/destroy/<%= comment.id %>">X</a>
+                                            <% } %>
                                         </div>
                                         <div class="card-footer">
                                             <p class = "owner-name card-link text-primary">Commented by <%= comment.user.name %></p>
