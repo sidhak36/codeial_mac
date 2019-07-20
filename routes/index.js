@@ -13,6 +13,9 @@ router.use('/users', require('./users'));
 // Middleware - Handles the path /post/....
 router.use('/posts', require('./posts'));
 
+// Middleware - Handles the path /comment/....
+router.use('/comments', require('./comments'));
+
 //Handles all the /.... paths
 router.get('/', homeController.home);
 

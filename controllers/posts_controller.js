@@ -13,3 +13,4 @@ module.exports.createPost = function(req, res){
         return res.redirect('/');
     });
 }
+

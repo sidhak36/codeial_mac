@@ -1,12 +1,10 @@
 footer {
   font-size: 1rem;
   font-family: verdana;
-  position: absolute;
-  bottom: 0;
   width: 100%;
   height: 70px;
   padding-top: 10px;
-  background-color: #616161;
+  background-color: #263238;
   display: flex;
   justify-content: flex-start; }
   footer .company-info {
