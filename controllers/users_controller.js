@@ -1,14 +1,10 @@
 
-//Instance of Users model in the database
+//Instance of User model in the database
 const User = require('../models/userSchema');
 
-module.exports.profilePage = function(req, res){
-    User.findById(req.params.id, function(err, user){
-        if(err){
-            console.log('Error while finding user');
-            return;
-        }
-
+module.exports.profilePage = async function(req, res){
+    try{
+        let user = await User.findById(req.params.id);
         if(user){
             return res.render('user_profile', {
                 title: 'User profile',
@@ -17,21 +13,24 @@ module.exports.profilePage = function(req, res){
         }else{
             return res.redirect('back');
         }
-    });
+    }catch(err){
+        console.log(`Error occurred... ${err}`);
+        return;
+    }
 }
 
-module.exports.update = function(req, res){
-    if(req.user.id == req.params.id){
-        //Update the user information
-        User.findByIdAndUpdate(req.params.id, req.body, function(err, user){
-            if(err){
-                console.log("An error occured while updating user's info");
-                return;
-            }
+module.exports.update = async function(req, res){
+    try{
+        if(req.user.id == req.params.id){
+            //Update the user information
+            let user = await User.findByIdAndUpdate(req.params.id, req.body);
             return res.redirect('back');
-        });
-    }else{
-        return res.status(401).send('Unauthorized Request');
+        }else{
+            return res.status(401).send('Unauthorized Request');
+        }
+    }catch(err){
+        console.log(`Error occurred... ${err}`);
+        return;
     }
 }
 
@@ -58,28 +57,23 @@ module.exports.signIn = function(req, res){
 
 //get the sign up data
 
-module.exports.create = function(req, res){
+module.exports.create = async function(req, res){
     if(req.body.password != req.body.confirm_password){
         return res.redirect('back');
     }
-
-    User.findOne({email: req.body.email}, function(err, user){
-        if(err){
-            console.log('An error occured while finding user with specified email');
-            return;
-        }
-
+    try{
+        let user = await User.findOne({email: req.body.email});
+    
         if(user){
             return res.redirect('back');
-        }
-        User.create(req.body, function(err, user){
-            if(err){
-                console.log('An error occured while creating the user');
-                return;
-            }
+        }else{
+            let user = await User.create(req.body);
             return res.redirect('/users/sign-in');
-        });
-    });
+        }
+    }catch(err){
+        console.log(`Error occurred... ${err}`);
+        return;
+    }
     
 }
 

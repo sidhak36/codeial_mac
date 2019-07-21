@@ -2,57 +2,42 @@
 const Comment = require('../models/comments');
 const Post = require('../models/posts');
 
-module.exports.createComment = function(req, res){
-    Post.findById(req.body.post_id, function(err, post){
-        if(err){
-            console.log('An error occured while finding post by post_id');
-            return;
-        }
-
+module.exports.createComment = async function(req, res){
+    try{
+        let post = await Post.findById(req.body.post_id);
         if(post){
-            Comment.create({
+            let comment = await Comment.create({
                 content: req.body.content,
                 user: req.user._id,
                 post: req.body.post_id
-            }, function(err, comment){
-                if(err){
-                    console.log('An error occured while creating comment');
-                    return;
-                }
-                post.comments.push(comment._id); //post is updated but still in the ram
-                post.save(); //Updated post gets saved in database
-
-                return res.redirect('back');
             });
+            post.comments.push(comment._id); //post is updated but still in the ram
+            post.save(); //Updated post gets saved in database
+            return res.redirect('back');
         }
-    })
+        return res.redirect('back');
+    }catch(err){
+        console.log('An error occurred.. ', err);
+        return;
+    }
 }
 
-module.exports.destroyComment = function(req, res){
-    Comment.findById(req.params.id).populate('post').exec(function(err, comment){
-        if(err){
-            console.log('An error occured while finding comment');
-            return;
-        }
-
+module.exports.destroyComment = async function(req, res){
+    try{
+        let comment = await Comment.findById(req.params.id).populate('post');
         if(comment){
             if(req.user.id == comment.user || req.user.id == comment.post.user){
                 let postId = comment.post;
                 comment.remove();
 
-                Post.findByIdAndUpdate(postId, { $pull: {comments: req.params.id}}, 
-                    function(err, post){
-                        if(err){
-                            console.log('Error occured while removing comment from post');
-                            return;
-                        }
-                        return res.redirect('back');
-                    });
-            }else{
+                let post = await Post.findByIdAndUpdate(postId, { $pull: {comments: req.params.id}});
                 return res.redirect('back');
             }
-        }else{
-            return res.redirect('back');
         }
-    });
+        return res.redirect('back');
+    }catch(err){
+        console.log('An error occurred.. ', err);
+        return;
+    }
+   
 }

@@ -7,20 +7,20 @@ const User = require('../models/userSchema');
 
 const strategy = new LocalSrategy({
     usernameField : 'email'
-}, function(email, password, done){
-    //find a user and establish the identity
-    User.findOne({email: email}, function(err, user){
-        if(err){
-            console.log('Error in finding the user --> Passport');
-            return done(err);
-        }
+}, async function(email, password, done){
+    try{
+        //find a user and establish the identity
+        let user = await User.findOne({email: email});
         //If user isn't found(ie wrong email) or password is wrong
         if(!user || user.password != password){
             console.log('Invalid Username/Password');
             return done(null, false);
         }
         return done(null, user);
-    });
+    }catch(err){
+        console.log('Error in finding the user --> Passport');
+        return done(err);
+    }
 });
 
 //authentication using passport
@@ -34,18 +34,19 @@ passport.serializeUser(function(user, done){
 });
 
 //deserializing the user from the key(user id) in the cookie
-passport.deserializeUser(function(userId, done){
-    User.findById(userId, function(err, user){
-        if(err){
-            console.log('Error in finding the user --> Passport');
-            return done(err);
-        }
+passport.deserializeUser(async function(userId, done){
+    try{
+        let user = await User.findById(userId);
         if(!user){
             console.log('Invalid credentials');
             return done(null, false);
         }
         return done(null, user);
-    });
+    }catch(err){
+        console.log('Error in deserializing the user --> Passport');
+        return done(err);
+    }
+
 });
 
 //check if the user is authenticated
