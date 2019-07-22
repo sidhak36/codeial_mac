@@ -24,13 +24,14 @@ module.exports.update = async function(req, res){
         if(req.user.id == req.params.id){
             //Update the user information
             let user = await User.findByIdAndUpdate(req.params.id, req.body);
+            req.flash('success', 'Information updated successfully');
             return res.redirect('back');
         }else{
-            return res.status(401).send('Unauthorized Request');
+            return res.status(401).send('Unauthorized');
         }
     }catch(err){
-        console.log(`Error occurred... ${err}`);
-        return;
+        req.flash('error', err);
+        return res.redirect('back');
     }
 }
 
@@ -59,20 +60,23 @@ module.exports.signIn = function(req, res){
 
 module.exports.create = async function(req, res){
     if(req.body.password != req.body.confirm_password){
+        req.flash('error', 'Confirm password does not match original');
         return res.redirect('back');
     }
     try{
         let user = await User.findOne({email: req.body.email});
     
         if(user){
+            req.flash('error', 'Account already exists');
             return res.redirect('back');
         }else{
             let user = await User.create(req.body);
+            req.flash('success', 'Successfully created account');
             return res.redirect('/users/sign-in');
         }
     }catch(err){
-        console.log(`Error occurred... ${err}`);
-        return;
+        req.flash('error', err);
+        return res.redirect('back');
     }
     
 }
@@ -80,6 +84,7 @@ module.exports.create = async function(req, res){
 
 //sign in and create a session for the user
 module.exports.createSession = function(req, res){
+    req.flash('success', 'Successfully logged in');
     return res.redirect('/');
 }
 
@@ -87,5 +92,6 @@ module.exports.createSession = function(req, res){
 //sign out
 module.exports.destroySession = function(req, res){
     req.logout();
+    req.flash('success', 'Successfully logged out');
     return res.redirect('/users/sign-in');
 }

@@ -17,6 +17,10 @@ const MongoStore = connectMongo(session);
 
 const sassMiddleware = require('node-sass-middleware');
 
+const flash = require('connect-flash');
+
+const flashMware = require('./config/flash-middleware');
+
 app.use(sassMiddleware({
     src: './assets/scss',
     dest: './assets/css',
@@ -40,6 +44,7 @@ app.use(express.static('./assets'));
 app.use(expressLayouts);
 
 //mongo store is used to store the session cookie in the db
+//session starts as soon as a user opens the website
 app.use(session({
     name: 'codeial',
     //TODO change the secret before deployment in production mode
@@ -58,10 +63,15 @@ app.use(session({
 }));
 
 app.use(passport.initialize());
+//passport updates express session with user id if user is authenticated and the session expire time is reset
+//similarly if user logs out, passport resets the session expire time
 app.use(passport.session());
 
 app.use(passport.setAuthenticatedUser);
 
+app.use(flash());
+
+app.use(flashMware.flash);
 
 //Use express router (middleware) Any request path will be sent to routes directory to map a controller
 app.use(require('./routes/index'));

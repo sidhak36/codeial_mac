@@ -13,12 +13,14 @@ module.exports.createComment = async function(req, res){
             });
             post.comments.push(comment._id); //post is updated but still in the ram
             post.save(); //Updated post gets saved in database
+            req.flash('success', 'Successfully created comment');
             return res.redirect('back');
         }
+        req.flash('error', "comment's post not found");
         return res.redirect('back');
     }catch(err){
-        console.log('An error occurred.. ', err);
-        return;
+        req.flash('error', err);
+        return res.redirect('back');
     }
 }
 
@@ -31,13 +33,17 @@ module.exports.destroyComment = async function(req, res){
                 comment.remove();
 
                 let post = await Post.findByIdAndUpdate(postId, { $pull: {comments: req.params.id}});
+                req.flash('success', 'Successfully deleted comment');
                 return res.redirect('back');
+            }else{
+                return res.status(401).send('Unauthorized');
             }
         }
+        req.flash('error', 'Comment not found');
         return res.redirect('back');
     }catch(err){
-        console.log('An error occurred.. ', err);
-        return;
+        req.flash('error', err);
+        return res.redirect('back');
     }
    
 }
