@@ -1,9 +1,9 @@
-<div class = "post-item card">
+<div id = "post-<%= post._id %>" class = "post-item card">
     <div class = "card-body">
         <h4 class = "card-title">Post</h4>
         <p class = "card-text"><%= post.content %></p>
         <% if(locals.user && locals.user.id == post.user.id){ %>
-        <a class="delete" href="/posts/destroy/<%= post.id %>">X</a>
+        <a class="delete delete-post-button" href="/posts/destroy/<%= post.id %>">X</a>
         <% } %>
         <% if(locals.user){ %>
         <div class = "comment-item card">
@@ -19,7 +19,7 @@
             </div>
         </div>
         <% } %>
-        <div id = "post-comments-list">
+        <div id = "post-comments-list-<%= post.id %>">
             <% for(var comment of post.comments){ %>
                 <%- include('_comment', {comment: comment}) -%>
             <% } %>
