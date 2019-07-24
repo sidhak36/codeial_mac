@@ -6,6 +6,7 @@ const db = require('./config/mongoose');
 const User = require('./models/userSchema');
 const app = express();
 const port = 8000;
+const path = require('path');
 
 //Used for session cookie
 const session = require('express-session');
@@ -26,7 +27,7 @@ app.use(sassMiddleware({
     dest: './assets/css',
     debug: true,
     outputStyle: 'extended',
-    prefix: '/css'
+    prefix: '/assets/css'
 }));
 
 //Use the urlencoded parser
@@ -37,8 +38,8 @@ app.use(cookieParser());
 
 
 //Use the static files(middleware)
-app.use(express.static('./assets'));
-
+app.use(express.static(path.join(__dirname, './assets')));
+app.use('/uploads', express.static(path.join(__dirname, './uploads')));
 
 //Use express ejs layouts(middleware)
 app.use(expressLayouts);

@@ -1,6 +1,8 @@
 
 //Instance of User model in the database
 const User = require('../models/userSchema');
+const fs = require('fs');
+const path = require('path');
 
 module.exports.profilePage = async function(req, res){
     try{
@@ -22,10 +24,30 @@ module.exports.profilePage = async function(req, res){
 module.exports.update = async function(req, res){
     try{
         if(req.user.id == req.params.id){
-            //Update the user information
-            let user = await User.findByIdAndUpdate(req.params.id, req.body);
-            req.flash('success', 'Information updated successfully');
-            return res.redirect('back');
+            // //Update the user information
+            // let user = await User.findByIdAndUpdate(req.params.id, req.body);
+            // req.flash('success', 'Information updated successfully');
+            // return res.redirect('back');
+
+            let user = await User.findById(req.params.id);
+            User.uploadedAvatar(req, res, function(err){
+                if(err){
+                    console.log('******Multer Error: ', err);
+                    return;
+                }
+                user.name = req.body.name;
+                user.email = req.body.email;
+                if(req.file){
+                    const filePath = path.join(__dirname, '..', user.avatar);
+                    if(user.avatar && fs.existsSync(filePath)){ //checks if file is present at filePath
+                        fs.unlinkSync(filePath); //deletes file synchronously at filePath
+                    }
+                    user.avatar = User.avatarPath + '/' + req.file.filename;
+                }
+                user.save();
+                req.flash('success', 'Information updated successfully');
+                return res.redirect('back');
+            });
         }else{
             return res.status(401).send('Unauthorized');
         }
