@@ -27,7 +27,7 @@ app.use(sassMiddleware({
     dest: './assets/css',
     debug: true,
     outputStyle: 'extended',
-    prefix: '/assets/css'
+    prefix: '/css'
 }));
 
 //Use the urlencoded parser

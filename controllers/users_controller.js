@@ -8,9 +8,12 @@ module.exports.profilePage = async function(req, res){
     try{
         let user = await User.findById(req.params.id);
         if(user){
+
+            let users = await User.find({});
             return res.render('user_profile', {
                 title: 'User profile',
-                profile_user: user
+                profile_user: user,
+                all_users: users
             });
         }else{
             return res.redirect('back');
@@ -38,9 +41,11 @@ module.exports.update = async function(req, res){
                 user.name = req.body.name;
                 user.email = req.body.email;
                 if(req.file){
-                    const filePath = path.join(__dirname, '..', user.avatar);
-                    if(user.avatar && fs.existsSync(filePath)){ //checks if file is present at filePath
-                        fs.unlinkSync(filePath); //deletes file synchronously at filePath
+                    if(user.avatar){ 
+                        const filePath = path.join(__dirname, '..', user.avatar);
+                        if(fs.existsSync(filePath)){ //checks if file is present at filePath
+                            fs.unlinkSync(filePath); //deletes file synchronously at filePath
+                        }
                     }
                     user.avatar = User.avatarPath + '/' + req.file.filename;
                 }

@@ -1,47 +1,73 @@
 
 <link rel="stylesheet" href="/css/user_profile.css">
 
-<img src="<%= user.avatar %>" alt="<%= user.name %>" width="100">
 
-<% if(user.id == profile_user.id){ %> 
-    <div class="card">
-        <div class="card-header">
-            <h4 class="card-title">Welcome</h4>
-        </div>
-        <div class="card-body">
-            <p> <%= profile_user.name %></p>
-            <p> <%= profile_user.email %></p>
-        </div>
+
+<div id="container">
+    <div id="left-section">
+        <h4>FRIENDS</h4>
+        <% if(locals.user){ %>
+        <% for(let user of all_users){ %>
+            <div class = "friend-item">
+                <a href="/users/profile/<%= user.id %>" class="card-link"><%= user.name%></a>
+            </div>
+        <% } %>
+        <% } %>
     </div>
-    <!--If user matches, then show the form-->
-    <div class="card">
-        <div class="card-header">
-            Update Profile Information
+    
+    <div id="middle-section">
+        <!--Show the profile information-->
+        <div id = "profile-container" class="item card">
+            <img id = "profile-image" class="card-header" src="<%= profile_user.avatar %>" alt="<%= profile_user.name %>">
+            <div id = "profile-info" class="card-body">
+                <p> <%= profile_user.name %></p>
+                <p> <%= profile_user.email %></p>
+            </div>
         </div>
-        <div class="card-body">
-            <form action="/users/update/<%= profile_user.id %>" method="post" enctype="multipart/form-data">
-                <div class="form-group">
-                    <input class = "form-control" type="text" name="name" value="<%= profile_user.name %>" required placeholder="Enter Name">
-                </div>
-                <div class="form-group">
-                    <input class = "form-control" type="email" name="email" value="<%= profile_user.email%>" required placeholder="Enter Email">
-                </div>
-                <div class="form-group">
-                    <input class = "form-control" type="file" name="avatar" placeholder="Upload profile image">
-                </div>
-                <input class="btn btn-primary" type="submit" value="Update">
-            </form>
-        </div>
+        
     </div>
-<% }else{ %>
-    <!--show only the profile info-->
-    <div class="card">
-        <div class="card-header">
-            <h4 class="card-title">Welcome</h4>
-        </div>
-        <div class="card-body">
-            <p> <%= profile_user.name %></p>
-            <p> <%= profile_user.email %></p>
-        </div>
+    
+    <div id="right-section">
+        <% if(locals.user && locals.user.id == profile_user.id){ %> 
+            <!--If user matches, then show the form-->
+            <div id = "update-info" class="item card">
+                <div id = "update-info-header" class="card-header">
+                    Update Profile Information
+                </div>
+                <div class="card-body">
+                    <form action="/users/update/<%= profile_user.id %>" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <input class = "form-control" type="text" name="name" value="<%= profile_user.name %>" required placeholder="Enter Name">
+                        </div>
+                        <div class="form-group">
+                            <input class = "form-control" type="email" name="email" value="<%= profile_user.email%>" required placeholder="Enter Email">
+                        </div>
+                        <div class="form-group">
+                            <input accept="image/*" id = "upload-image" class = "form-control" type="file" name="avatar" placeholder="Upload profile image">
+                        </div>
+                        <input id = "update-button" class="btn btn-primary" type="submit" value="Update">
+                    </form>
+                    <img id = "display-preview" class="card-footer" src="" alt="Preview">
+                </div>
+            </div>
+        <% } %>
     </div>
-<% } %>
+</div>
+
+
+
+
+<script>
+    //display preview of the selected image for profile image
+    $('#upload-image').on('change', function(e){
+        let fileReader = new FileReader();
+
+        fileReader.onload = function(){
+            $('#display-preview').attr('src', fileReader.result).css({
+                display: 'inline'
+            });
+        }
+
+        fileReader.readAsDataURL(e.target.files[0]);
+    });
+</script>

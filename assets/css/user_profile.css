@@ -1,0 +1,64 @@
+body {
+  background: linear-gradient(to right, #304FFE, #536DFE); }
+
+#container {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px; }
+  #container #left-section {
+    width: 25%;
+    padding: 10px;
+    border-right: 1px solid lightgrey; }
+    #container #left-section h4 {
+      text-align: center;
+      color: white;
+      margin-bottom: 20px; }
+    #container #left-section .friend-item {
+      margin: 2px;
+      padding: 5px;
+      border-radius: 2px;
+      background-color: #1A237E;
+      color: white; }
+      #container #left-section .friend-item a {
+        color: white;
+        font-size: 1.2rem; }
+  #container #middle-section {
+    width: 40%; }
+    #container #middle-section #profile-container {
+      background-color: transparent;
+      border: none; }
+      #container #middle-section #profile-container #profile-image {
+        width: 300px;
+        height: 300px;
+        margin: auto;
+        display: block; }
+      #container #middle-section #profile-container #profile-info p {
+        text-align: center;
+        font-weight: 500;
+        font-size: 1.5rem;
+        font-style: italic;
+        text-transform: capitalize;
+        color: white; }
+  #container #right-section {
+    width: 30%;
+    border-left: 1px solid lightgrey;
+    padding: 10px; }
+    #container #right-section #update-info {
+      background-color: transparent;
+      border: none;
+      margin-top: 20px;
+      color: white; }
+      #container #right-section #update-info #update-info-header {
+        background-color: transparent;
+        border: none;
+        font-weight: 500;
+        font-size: 1.4rem; }
+      #container #right-section #update-info #update-button {
+        padding: 10px;
+        font-weight: 500;
+        font-size: 1.2rem; }
+
+#display-preview {
+  width: 150px;
+  height: 150px;
+  display: none; }
