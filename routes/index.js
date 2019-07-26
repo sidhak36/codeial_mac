@@ -16,6 +16,10 @@ router.use('/posts', require('./posts'));
 // Middleware - Handles the path /comment/....
 router.use('/comments', require('./comments'));
 
+
+//Middleware to handle api requests
+router.use('/api', require('./api/index'));
+
 //Handles all the /.... paths
 router.get('/', homeController.home);
 
